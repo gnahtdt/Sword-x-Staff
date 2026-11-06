@@ -49,6 +49,64 @@
   .legend-chip img { width: 100%; height: 100%; object-fit: contain; pointer-events: none; }
   .legend-chip:hover { border-color: #ffffffd9; }
   .legend-chip.off { opacity: 0.35; border-color: rgba(255, 255, 255, 0.22); }
+
+  @media (max-width: 600px) {
+    .sxs-map-tool { height: 100vh !important; height: 100dvh !important; }
+    .legend-bar {
+      top: 8px;
+      right: 8px;
+      left: 8px;
+      max-width: none;
+      gap: 6px;
+    }
+    .legend-chip {
+      width: 40px;
+      height: 40px;
+      padding: 6px;
+    }
+    .zone-tabs {
+      left: 8px;
+      right: 8px;
+      bottom: max(8px, env(safe-area-inset-bottom));
+      max-width: none;
+      flex-wrap: nowrap;
+      justify-content: flex-start;
+      gap: 8px;
+      padding: 4px 2px 8px;
+      overflow-x: auto;
+      overflow-y: hidden;
+      scrollbar-width: none;
+      -webkit-overflow-scrolling: touch;
+    }
+    .zone-tabs::-webkit-scrollbar { display: none; }
+    .zone-tab {
+      flex: 0 0 auto;
+      padding-top: 8px;
+    }
+    .zone-thumb {
+      width: 48px;
+      height: 48px;
+    }
+    .zone-name {
+      font-size: 0.68rem;
+      padding: 3px 6px;
+    }
+    .filter-panel {
+      left: 8px;
+      right: 8px;
+      max-width: calc(100% - 16px);
+      padding: 10px;
+    }
+    .filter-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 6px;
+    }
+    .filter-pill {
+      min-width: 0;
+      padding: 7px 8px;
+      font-size: 0.78rem;
+    }
+  }
 </style>
 </head>
 <body>
@@ -494,6 +552,47 @@ const ingredientNames = {"8000":"Raw Meat","8001":"Tender Meat","8002":"Prime Me
     }selectZone(initial.id);
   })();
 })();</script>
+<script>
+  (() => {
+    const zoneTabs = document.getElementById("zone-tabs");
+    let state = null;
+    let suppressClick = false;
+
+    zoneTabs.addEventListener("pointerdown", (event) => {
+      if (event.pointerType !== "mouse" || event.button !== 0) return;
+      state = { pointerId: event.pointerId, startX: event.clientX, startScroll: zoneTabs.scrollLeft, dragging: false };
+      document.addEventListener("pointermove", onPointerMove);
+      document.addEventListener("pointerup", onPointerEnd);
+      document.addEventListener("pointercancel", onPointerEnd);
+    });
+
+    zoneTabs.addEventListener("click", (event) => {
+      if (!suppressClick) return;
+      event.preventDefault();
+      event.stopImmediatePropagation();
+      suppressClick = false;
+    }, true);
+
+    function onPointerMove(event) {
+      if (!state || event.pointerId !== state.pointerId) return;
+      const delta = event.clientX - state.startX;
+      if (!state.dragging && Math.abs(delta) < 5) return;
+      state.dragging = true;
+      zoneTabs.scrollLeft = state.startScroll - delta;
+      event.preventDefault();
+    }
+
+    function onPointerEnd(event) {
+      if (!state || event.pointerId !== state.pointerId) return;
+      if (state.dragging) suppressClick = true;
+      state = null;
+      document.removeEventListener("pointermove", onPointerMove);
+      document.removeEventListener("pointerup", onPointerEnd);
+      document.removeEventListener("pointercancel", onPointerEnd);
+      if (suppressClick) window.setTimeout(() => { suppressClick = false; }, 0);
+    }
+  })();
+</script>
 
 </body>
 </html>

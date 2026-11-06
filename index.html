@@ -307,6 +307,220 @@
         .row-aethyris { background-color: #e2d9f3; }
         .excel-table td.center { text-align: center; }
         .excel-table input[type="checkbox"] { width: 16px; height: 16px; cursor: pointer; }
+
+        @media (min-width: 761px) and (max-width: 1024px) {
+            .sidebar {
+                width: 200px;
+            }
+            .content-body {
+                padding: 16px;
+            }
+            .decks-grid {
+                grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+                gap: 16px;
+            }
+            .image-card {
+                min-width: 280px;
+            }
+        }
+
+        .sub-header-bar {
+            scrollbar-width: none;
+        }
+        .sub-header-bar::-webkit-scrollbar {
+            display: none;
+        }
+
+        .image-viewer {
+            width: min(96vw, 1200px);
+            max-width: none;
+            max-height: 94vh;
+            max-height: 94dvh;
+            padding: 12px;
+            border: 1px solid #30363d;
+            border-radius: 12px;
+            background: #0b0e14;
+            color: #fff;
+        }
+        .image-viewer::backdrop {
+            background: rgba(0, 0, 0, 0.88);
+        }
+        .image-viewer-toolbar {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 8px;
+            margin-bottom: 8px;
+        }
+        .image-viewer-toolbar button {
+            min-width: 44px;
+            min-height: 44px;
+            border: 1px solid #30363d;
+            border-radius: 8px;
+            background: #161b22;
+            color: #fff;
+            font-size: 20px;
+            cursor: pointer;
+        }
+        .image-viewer-toolbar button:hover {
+            border-color: #f39c12;
+        }
+        .image-viewer-content {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: min(82vh, 900px);
+            height: min(82dvh, 900px);
+            overflow: hidden;
+            background: #050608;
+            border-radius: 8px;
+            touch-action: none;
+        }
+        .image-viewer-content img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            transform: translate(0, 0) scale(1);
+            transform-origin: center;
+            touch-action: none;
+            user-select: none;
+            -webkit-user-drag: none;
+        }
+        .image-viewer-content.zoomed {
+            cursor: grab;
+        }
+        .image-viewer-content.dragging {
+            cursor: grabbing;
+        }
+        .image-display-wrapper img,
+        .image-card img,
+        .deck-card img {
+            cursor: zoom-in;
+        }
+
+        @media (max-width: 760px) {
+            html, body {
+                height: 100%;
+                min-height: 100%;
+            }
+            body {
+                height: 100vh;
+                height: 100dvh;
+                flex-direction: column;
+            }
+            .sidebar {
+                width: 100%;
+                height: auto;
+                padding: 10px 0 0;
+                border-right: 0;
+                border-bottom: 1px solid #21262d;
+            }
+            .sidebar-logo {
+                padding: 0 12px 8px;
+                margin-bottom: 8px;
+                font-size: 14px;
+            }
+            .sidebar-menu {
+                flex-direction: row;
+                gap: 6px;
+                padding: 0 8px 8px;
+                overflow-x: auto;
+                overflow-y: hidden;
+                scrollbar-width: none;
+                -webkit-overflow-scrolling: touch;
+            }
+            .sidebar-menu::-webkit-scrollbar,
+            .sub-header-bar::-webkit-scrollbar {
+                display: none;
+            }
+            .sidebar-btn {
+                flex: 0 0 auto;
+                min-height: 44px;
+                padding: 10px 12px;
+                font-size: 11px;
+            }
+            .sidebar-btn.active {
+                border-left: 0;
+                border-bottom: 3px solid #f39c12;
+            }
+            .main-container {
+                height: auto;
+                min-height: 0;
+                flex: 1;
+            }
+            .sub-header-bar {
+                min-height: 52px;
+                padding: 8px 10px;
+                gap: 8px;
+                -webkit-overflow-scrolling: touch;
+            }
+            .sub-btn {
+                min-height: 40px;
+                padding: 8px 12px;
+            }
+            .content-body {
+                min-height: 0;
+                padding: 12px;
+            }
+            .tab-view {
+                min-width: 0;
+            }
+            #view-maps {
+                min-height: 0;
+            }
+            #map-frame {
+                min-height: 0;
+            }
+            .guideline-box {
+                padding: 12px;
+                margin-bottom: 12px;
+            }
+            .guideline-content {
+                font-size: 12px;
+                overflow-wrap: anywhere;
+            }
+            .image-display-wrapper {
+                padding-bottom: 12px;
+            }
+            .image-display-wrapper img,
+            .image-card img,
+            .deck-card img {
+                max-height: 65vh;
+            }
+            .dual-image-container {
+                gap: 12px;
+            }
+            .image-card {
+                min-width: 0;
+                width: 100%;
+                padding: 12px;
+            }
+            .decks-grid {
+                grid-template-columns: minmax(0, 1fr);
+                gap: 12px;
+            }
+            .deck-card {
+                padding: 12px;
+            }
+            .excel-table-container {
+                margin-bottom: 12px;
+                -webkit-overflow-scrolling: touch;
+            }
+        }
+
+        @media (max-width: 420px) {
+            .content-body {
+                padding: 8px;
+            }
+            .sidebar-btn {
+                font-size: 10px;
+                padding: 9px 10px;
+            }
+            .guideline-title {
+                font-size: 12px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -442,6 +656,18 @@
 
         </div>
     </div>
+
+    <dialog class="image-viewer" id="image-viewer" aria-label="Image viewer">
+        <div class="image-viewer-toolbar">
+            <button type="button" id="image-zoom-out" aria-label="Zoom out">−</button>
+            <button type="button" id="image-zoom-reset" aria-label="Reset zoom">100%</button>
+            <button type="button" id="image-zoom-in" aria-label="Zoom in">+</button>
+            <button type="button" id="image-viewer-close" aria-label="Close image">×</button>
+        </div>
+        <div class="image-viewer-content" id="image-viewer-content">
+            <img id="image-viewer-img" alt="">
+        </div>
+    </dialog>
 
     <script>
         const scheduleData = [
@@ -717,6 +943,165 @@
                 btn.classList.add('active');
             }
         }
+
+        const dragScrollElements = new WeakSet();
+        function enableHorizontalDragScroll(element) {
+            if (!element || dragScrollElements.has(element)) return;
+            dragScrollElements.add(element);
+            let state = null;
+            let suppressClick = false;
+
+            element.addEventListener('pointerdown', event => {
+                if (event.pointerType !== 'mouse' || event.button !== 0) return;
+                state = {
+                    pointerId: event.pointerId,
+                    startX: event.clientX,
+                    startScroll: element.scrollLeft,
+                    dragging: false
+                };
+                document.addEventListener('pointermove', onPointerMove);
+                document.addEventListener('pointerup', onPointerEnd);
+                document.addEventListener('pointercancel', onPointerEnd);
+            });
+
+            element.addEventListener('click', event => {
+                if (!suppressClick) return;
+                event.preventDefault();
+                event.stopImmediatePropagation();
+                suppressClick = false;
+            }, true);
+
+            function onPointerMove(event) {
+                if (!state || event.pointerId !== state.pointerId) return;
+                const delta = event.clientX - state.startX;
+                if (!state.dragging && Math.abs(delta) < 5) return;
+                state.dragging = true;
+                element.scrollLeft = state.startScroll - delta;
+                event.preventDefault();
+            }
+
+            function onPointerEnd(event) {
+                if (!state || event.pointerId !== state.pointerId) return;
+                if (state.dragging) suppressClick = true;
+                state = null;
+                document.removeEventListener('pointermove', onPointerMove);
+                document.removeEventListener('pointerup', onPointerEnd);
+                document.removeEventListener('pointercancel', onPointerEnd);
+                if (suppressClick) window.setTimeout(() => { suppressClick = false; }, 0);
+            }
+        }
+
+        const sidebarMenu = document.querySelector('.sidebar-menu');
+        const subHeader = document.getElementById('sub-header-container');
+        enableHorizontalDragScroll(sidebarMenu);
+        enableHorizontalDragScroll(subHeader);
+
+        document.querySelector('.content-body').addEventListener('click', event => {
+            const image = event.target.closest('img');
+            if (!image || !event.currentTarget.contains(image)) return;
+            const viewer = document.getElementById('image-viewer');
+            const viewerImage = document.getElementById('image-viewer-img');
+            viewerImage.src = image.currentSrc || image.src;
+            viewerImage.alt = image.alt || '';
+            viewer.showModal();
+            resetImageZoom();
+        });
+
+        const imageViewer = document.getElementById('image-viewer');
+        const viewerContent = document.getElementById('image-viewer-content');
+        const viewerImage = document.getElementById('image-viewer-img');
+        const zoomResetButton = document.getElementById('image-zoom-reset');
+        let imageScale = 1;
+        let imageOffsetX = 0;
+        let imageOffsetY = 0;
+        let imagePointers = new Map();
+        let imageDragStart = null;
+        let pinchStart = null;
+
+        function updateImageTransform() {
+            viewerImage.style.transform = `translate(${imageOffsetX}px, ${imageOffsetY}px) scale(${imageScale})`;
+            zoomResetButton.textContent = `${Math.round(imageScale * 100)}%`;
+            viewerContent.classList.toggle('zoomed', imageScale > 1);
+        }
+
+        function setImageZoom(nextScale) {
+            if (!Number.isFinite(nextScale)) return;
+            imageScale = Math.min(5, Math.max(1, nextScale));
+            if (imageScale === 1) {
+                imageOffsetX = 0;
+                imageOffsetY = 0;
+            }
+            updateImageTransform();
+        }
+
+        function resetImageZoom() {
+            imageScale = 1;
+            imageOffsetX = 0;
+            imageOffsetY = 0;
+            updateImageTransform();
+        }
+
+        document.getElementById('image-zoom-in').addEventListener('click', () => setImageZoom(imageScale * 1.25));
+        document.getElementById('image-zoom-out').addEventListener('click', () => setImageZoom(imageScale / 1.25));
+        zoomResetButton.addEventListener('click', resetImageZoom);
+        document.getElementById('image-viewer-close').addEventListener('click', () => imageViewer.close());
+        document.addEventListener('keydown', event => {
+            if (event.key === 'Escape' && imageViewer.open) imageViewer.close();
+        });
+
+        viewerContent.addEventListener('wheel', event => {
+            event.preventDefault();
+            setImageZoom(imageScale * (event.deltaY < 0 ? 1.15 : 1 / 1.15));
+        }, { passive: false });
+
+        viewerContent.addEventListener('pointerdown', event => {
+            viewerContent.setPointerCapture(event.pointerId);
+            imagePointers.set(event.pointerId, { x: event.clientX, y: event.clientY });
+            if (imagePointers.size === 1 && imageScale > 1) {
+                imageDragStart = {
+                    x: event.clientX,
+                    y: event.clientY,
+                    offsetX: imageOffsetX,
+                    offsetY: imageOffsetY
+                };
+            } else if (imagePointers.size === 2) {
+                const [first, second] = imagePointers.values();
+                pinchStart = {
+                    distance: Math.hypot(first.x - second.x, first.y - second.y),
+                    scale: imageScale
+                };
+                if (pinchStart.distance === 0) pinchStart = null;
+                imageDragStart = null;
+            }
+        });
+
+        viewerContent.addEventListener('pointermove', event => {
+            if (!imagePointers.has(event.pointerId)) return;
+            imagePointers.set(event.pointerId, { x: event.clientX, y: event.clientY });
+            if (imagePointers.size === 2 && pinchStart) {
+                const [first, second] = imagePointers.values();
+                const distance = Math.hypot(first.x - second.x, first.y - second.y);
+                setImageZoom(pinchStart.scale * distance / pinchStart.distance);
+            } else if (imagePointers.size === 1 && imageDragStart && imageScale > 1) {
+                imageOffsetX = imageDragStart.offsetX + event.clientX - imageDragStart.x;
+                imageOffsetY = imageDragStart.offsetY + event.clientY - imageDragStart.y;
+                updateImageTransform();
+                viewerContent.classList.add('dragging');
+            }
+        });
+
+        function endImagePointer(event) {
+            imagePointers.delete(event.pointerId);
+            imageDragStart = null;
+            pinchStart = null;
+            viewerContent.classList.remove('dragging');
+        }
+
+        viewerContent.addEventListener('pointerup', endImagePointer);
+        viewerContent.addEventListener('pointercancel', endImagePointer);
+        imageViewer.addEventListener('click', event => {
+            if (event.target === imageViewer) imageViewer.close();
+        });
     </script>
 </body>
 </html>
